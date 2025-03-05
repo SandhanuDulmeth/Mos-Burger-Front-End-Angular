@@ -2,13 +2,15 @@
 .parent {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+     grid-auto-rows: auto;
     gap: 8px;
 }
     
 .div1 {
-    grid-row: span 5 / span 5;
-}
+    position: sticky;
+    top: 0;
+    z-index: 100; /* ensure it stays on top */
+  }
 
 .div2 {
     grid-column: span 9 / span 9;
