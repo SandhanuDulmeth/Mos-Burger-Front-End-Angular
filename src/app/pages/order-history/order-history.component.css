@@ -1,0 +1,50 @@
+body {
+    background-color: #f0f2f5;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  h1 {
+    font-weight: 300;
+    color: #343a40;
+  }
+  .order-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: #ffffff;
+  }
+  .order-card .card-header {
+    background-color: #343a40;
+    color: #ffffff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  .order-card .card-body {
+    padding: 20px;
+  }
+  .order-card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .order-card ul li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .order-card ul li:last-child {
+    border-bottom: none;
+  }
+  .btn-custom {
+    background-color: #e27324;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-custom:hover {
+    background-color: #c15d1e;
+  }
+  .no-orders {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+    color: #6c757d;
+  }
