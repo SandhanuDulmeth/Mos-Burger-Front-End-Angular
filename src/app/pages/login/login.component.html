@@ -20,10 +20,10 @@
             <input type="password" [(ngModel)]="password" class="form-control" placeholder="Password">
           </div>
           <div class="mb-3">
-            <button type="button" [disabled]="loginDisabled" (click)="onLogin()" class="btn btn-primary btn-sm btnLogin">Login</button>
+            <button type="button" [disabled]="!email || !password" (click)="onLogin()" class="btn btn-primary btn-sm btnLogin">Login</button>
           </div>
           <div class="mb-3">
-            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+            <button type="button" [disabled]="!email.endsWith('@gmail.com')" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
               Forgot Password?
             </button>
           </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <input type="email" [(ngModel)]="resetEmail" class="form-control" placeholder="Enter your email">
+              <input type="email" [value]="email" class="form-control" placeholder="Enter your email" readonly>
             </div>
             <div class="mb-3 d-flex align-items-center">
               <button type="button" (click)="getResetCode()" class="btn btn-secondary me-2">Get Code</button>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" [disabled]="resetPasswordDisabled" (click)="resetPassword()" class="btn btn-primary">Reset Password</button>
+            <button type="button" [disabled]="!email || !newPassword || !resetCode || !isResetTrue" (click)="resetPassword()" class="btn btn-primary">Reset Password</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
