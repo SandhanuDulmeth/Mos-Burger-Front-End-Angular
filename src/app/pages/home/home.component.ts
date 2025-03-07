@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,13 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-
+export class HomeComponent implements OnInit{
+ngOnInit(): void {
+  Swal.fire({
+    imageUrl: "assets/Images/ControllerPanel/Offer01.png",
+    imageWidth: 350,
+    imageHeight: 300,
+    imageAlt: "Custom image"
+  });
+}
 }
