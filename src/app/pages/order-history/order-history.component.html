@@ -1,52 +1,53 @@
+
 <div class="container py-5">
-    <h1 class="text-center mb-5">
+  <h1 class="text-center mb-5">
       <i class="fas fa-history"></i> Order History
-    </h1>
-    
-    <div *ngIf="orders.length > 0; else noOrders">
-      <div class="order-card card mb-4" *ngFor="let order of orders">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-md-6">
-              <strong>Order ID:</strong> {{ order.id }}
-            </div>
-            <div class="col-md-6 text-end">
-              <strong>Date:</strong> {{ order.date }}
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-8">
-              <h5 class="mb-3">Items:</h5>
-              <ul class="list-group">
-                <li class="list-group-item border-0" *ngFor="let item of order.items">
-                  {{ item.name }} (x{{ item.quantity }}) - ${{ item.price * item.quantity }}
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <div class="d-grid gap-3">
-                <div class="text-end">
-                  <h5>Total: ${{ order.total }}</h5>
-                  <p class="text-muted">Status: {{ order.status }}</p>
-                </div>
-                <button class="btn btn-custom" (click)="downloadInvoice(order.id)">
-                  <i class="fas fa-download"></i> Download Invoice
-                </button>
-                <button class="btn btn-custom" (click)="repeatOrder(order.id)">
-                  <i class="fas fa-redo"></i> Repeat Order
-                </button>
+  </h1>
+
+  <div *ngIf="orders.length > 0; else noOrders">
+      <div class="order-card card mb-4" *ngFor="let order of orders ; let i = index">
+          <div class="card-header">
+              <div class="row">
+                  <div class="col-md-6">
+                      <strong>Order #:</strong> {{ order.id }}
+                      <div class="mt-1">
+                          <small>Contact: {{ order.customer.phone }}</small>
+                      </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                      <strong>Date:</strong> {{ order.date | date:'medium' }}
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-8">
+                      <h5 class="mb-3">Items:</h5>
+                      <ul class="list-group">
+                          <li class="list-group-item border-0" *ngFor="let item of order.items">
+                              {{ item.item.name }} (x{{ item.quantity }}) - Rs. {{ (item.item.price / 100).toFixed(2) }}
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="d-grid gap-3">
+                          <div class="text-end">
+                              <h5>Total Price: Rs. {{ (order.total / 100).toFixed(2) }}</h5>
+                              <p class="text-muted">Status: {{ order.status }}</p>
+                          </div>
+                          <button (click)="printOrderReport(i)" class="btn btn-custom">
+                            <i class="fas fa-print"></i> Print Invoice
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-  
-    <ng-template #noOrders>
-      <div class="no-orders">
-        <h3>No orders found.</h3>
-      </div>
-    </ng-template>
   </div>
+
+  <ng-template #noOrders>
+      <div class="no-orders">
+          <h3>No orders found.</h3>
+      </div>
+  </ng-template>
+</div>

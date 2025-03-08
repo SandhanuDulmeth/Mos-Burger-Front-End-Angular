@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  // Form fields
+  
  email: string = '';
   password: string = '';
   isResetTrue: boolean = false;
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) {}
   ngOnInit() {
-    // Update time every second
+   
     setInterval(() => {
       this.currentTime = new Date().toLocaleString();
     }, 1000);
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-// login.component.ts
+
 onLogin() {
   console.log('Login attempted with:', this.email, this.password);
 

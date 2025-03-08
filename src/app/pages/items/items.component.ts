@@ -1,6 +1,3 @@
-// items.component.ts
-
-
 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +6,7 @@ import { CartService, CartItem } from '../cart/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CartComponent } from '../cart/cart.component';
 export interface MenuItem {
-  id: string;  // Changed to string to match VARCHAR(10)
+  id: string;  
   name: string;
   price: number;
   category: string;
@@ -48,8 +45,8 @@ export class ItemsComponent implements OnInit {
       id: item.itemNo,
       name: item.name,
       price: Number(item.price),
-      category: item.itemType,  // Match database column
-      image: item.imageUrl      // Match database column
+      category: item.itemType,  
+      image: item.imageUrl   
     }));
   }
 
@@ -67,7 +64,7 @@ export class ItemsComponent implements OnInit {
           this.allItems = this.normalizeItems(JSON.parse(storedItems)); 
         }
 
-      this.filterItems(this.selectedCategory);  // Apply current filter
+      this.filterItems(this.selectedCategory);  
     } catch (error) {
       console.error('Error loading items:', error);
     }

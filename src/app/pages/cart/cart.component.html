@@ -1,25 +1,68 @@
-<p>cart works!</p>
-<div class="cart-container">
-    
-    <h2>Your Cart</h2>
-    <div *ngFor="let cartItem of cartItems" class="cart-item">
-      <div class="item-info">
-        <h5>{{ cartItem.item.name }}</h5>
-        <p>Rs.{{ cartItem.item.price | number:'1.2-2' }}</p>
-      </div>
-      <div class="quantity-controls">
-        <input type="number" [value]="cartItem.quantity" min="1" 
-        (change)="updateQuantity(cartItem.item.id, $event)">
-        <button class="btn btn-danger" (click)="removeItem(cartItem.item.id)">
-          Remove
-        </button>
-      </div>
-      <div class="item-total">
-        Rs.{{ (cartItem.item.price * cartItem.quantity) | number:'1.2-2' }}
-      </div>
+<div class="cart-container position-relative">
+    <!-- Header section with positioned close button -->
+    <div class="modal-header position-relative p-3">
+      <h2 class="modal-title">Customer Details</h2>
+      <button type="button" 
+              class="btn-close position-absolute top-0 end-0 m-3" 
+              data-bs-dismiss="modal"
+
+              aria-label="Close"></button>
     </div>
-    <div class="total-section">
-      <h4>Total: Rs.{{ total | number:'1.2-2' }}</h4>
-      <button class="btn btn-primary" (click)="checkout()">Checkout</button>
+
+  
+
+    <div class="modal-body p-3">
+      <!-- Customer selection dropdown -->
+      <div class="mb-3">
+        <label>Select Customer:</label>
+        <select class="form-select" (change)="selectCustomer($event)">
+          <option value="">New Customer</option>
+          <option *ngFor="let customer of customers" [value]="customer.phone">
+            {{ customer.name }} - {{ customer.phone }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Rest of your content remains the same -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Name" 
+                 [(ngModel)]="selectedCustomer.name" name="name">
+        </div>
+        <div class="col-md-6">
+          <input type="email" class="form-control" placeholder="Email" 
+                 [(ngModel)]="selectedCustomer.email" name="email">
+        </div>
+        <div class="col-md-6">
+          <input type="tel" class="form-control" placeholder="Phone" 
+                 [(ngModel)]="selectedCustomer.phone" name="phone">
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Address" 
+                 [(ngModel)]="selectedCustomer.address" name="address">
+        </div>
+      </div>
+  
+      <h2>Your Cart</h2>
+      <div *ngFor="let cartItem of cartItems" class="cart-item">
+        <div class="item-info">
+          <h5>{{ cartItem.item.name }}</h5>
+          <p>Rs.{{ cartItem.item.price | number:'1.2-2' }}</p>
+        </div>
+        <div class="quantity-controls">
+          <input type="number" [value]="cartItem.quantity" min="1" 
+          (change)="updateQuantity(cartItem.item.id, $event)">
+          <button class="btn btn-danger" (click)="removeItem(cartItem.item.id)">
+            Remove
+          </button>
+        </div>
+        <div class="item-total">
+          Rs.{{ (cartItem.item.price * cartItem.quantity) | number:'1.2-2' }}
+        </div>
+      </div>
+      <div class="total-section">
+        <h4>Total: Rs.{{ total | number:'1.2-2' }}</h4>
+        <button class="btn btn-primary" (click)="checkout()">Checkout</button>
+      </div>
     </div>
   </div>
