@@ -1,0 +1,4 @@
+.cart-container { padding: 20px; }
+    .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; }
+    .quantity-controls input { width: 60px; margin-right: 10px; }
+    .total-section { margin-top: 20px; text-align: right; }

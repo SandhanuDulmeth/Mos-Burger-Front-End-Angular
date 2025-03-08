@@ -5,9 +5,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CartService, CartItem } from './cart.service';
+import { CartService, CartItem } from '../cart/cart.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CartComponent } from './cart.component';
+import { CartComponent } from '../cart/cart.component';
 export interface MenuItem {
   id: string;  // Changed to string to match VARCHAR(10)
   name: string;
