@@ -59,7 +59,14 @@ export class ItemsComponent implements OnInit {
       if (!response.ok) throw new Error('Network response was not ok');
       
       const data = await response.json();
-      this.allItems = this.normalizeItems(data);  // Store in allItems
+    
+        localStorage.setItem('items', JSON.stringify(data));
+       
+        const storedItems = localStorage.getItem('items');
+        if (storedItems) {
+          this.allItems = this.normalizeItems(JSON.parse(storedItems)); 
+        }
+
       this.filterItems(this.selectedCategory);  // Apply current filter
     } catch (error) {
       console.error('Error loading items:', error);
