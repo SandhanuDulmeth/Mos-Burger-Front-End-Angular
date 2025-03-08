@@ -10,19 +10,35 @@
         </button>
       </div>
     </div>
-  
+
+
+  <!-- Add floating cart button -->
+<button class="order-btn" (click)="openCart()">
+  <i class="fas fa-shopping-cart"></i>
+  <span class="cart-badge">{{ cartItemCount }}</span>
+</button>
+
+  <!-- Update category buttons -->
+  <div class="d-flex flex-wrap">
+    <button *ngFor="let cat of categories" 
+            class="btn btn-light category-btn"
+            [class.active]="selectedCategory === cat"
+            (click)="filterItems(cat)">
+      {{ cat }}
+    </button>
+  </div>
+
+
+
     <div class="row g-4">
       <div *ngFor="let item of menuItems" class="col-md-6">
-        <div class="menu-item-card">
-          <img [src]="item.image" class="item-image w-100" alt="Item image">
+        <div class="card h-100">
+          <img [src]="item.image" class="card-img-top" alt="{{item.name}}" style="height: 150px; object-fit: cover;">
           <div class="p-3">
             <h5 class="item-name">{{ item.name }}</h5>
             <div class="d-flex justify-content-between align-items-center">
               <span class="h5 text-primary">Rs. {{ item.price }}</span>
-              <button class="btn btn-primary rounded-circle p-2" 
-                      (click)="addToCart(item)">
-                <i class="fas fa-plus"></i>
-              </button>
+              <button style="background-color: #FB710C;" class="btn btn-add-item"  (click)="addToCart(item)">Add to Cart</button>
             </div>
           </div>
         </div>
@@ -30,4 +46,6 @@
     </div>
   </div>
   
-  <!-- order button and modal would be in a separate component -->
+  <div id="cart-items" class="mb-4">
+    <!-- Cart items dynamically inserted here -->
+  </div>

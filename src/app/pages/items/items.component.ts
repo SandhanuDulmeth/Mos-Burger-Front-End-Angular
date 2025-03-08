@@ -1,8 +1,15 @@
+// items.component.ts
+
+
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-interface MenuItem {
-  id: number;
+import { CartService, CartItem } from './cart.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CartComponent } from './cart.component';
+export interface MenuItem {
+  id: string;  // Changed to string to match VARCHAR(10)
   name: string;
   price: number;
   category: string;
@@ -11,30 +18,75 @@ interface MenuItem {
 
 @Component({
   selector: 'app-items',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
 export class ItemsComponent implements OnInit {
+  private allItems: MenuItem[] = [];
+  public categories: string[] = [];
+  menuItems: MenuItem[] = [];
+  selectedCategory = 'All';
+  cartItemCount = 0;
 
-public categories: any ;
-  constructor(){
-    this.categories =['All', 'Burger', 'Submarine', 'Fries', 'Pasta', 'Chicken', 'Beverage'];
+  constructor(
+    private cartService: CartService,
+    public dialog: MatDialog
+  ) {
+    this.categories = ['All', 'Burger', 'Submarine', 'Fries', 'Pasta', 'Chicken', 'Beverage'];
   }
-
-   menuItems: MenuItem[] = [];
 
   ngOnInit(): void {
-     }
-
-  filterItems(cat: any) {
-    console.log(cat);
-    
-  }
-  addToCart(item:any){
-    console.log(item);
-    
+    this.loadItemsFromJSON();
+    this.cartService.cartItems$.subscribe(items => {
+      this.cartItemCount = items.reduce((sum, ci) => sum + ci.quantity, 0);
+    });
   }
 
+  normalizeItems(rawItems: any[]): MenuItem[] {
+    return rawItems.map(item => ({
+      id: item.itemNo,
+      name: item.name,
+      price: Number(item.price),
+      category: item.itemType,  // Match database column
+      image: item.imageUrl      // Match database column
+    }));
+  }
 
+  async loadItemsFromJSON() {
+    try {
+      const response = await fetch("http://localhost:8080/itemController/get-Items");
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      this.allItems = this.normalizeItems(data);  // Store in allItems
+      this.filterItems(this.selectedCategory);  // Apply current filter
+    } catch (error) {
+      console.error('Error loading items:', error);
+    }
+  }
+
+filterItems(category: string) {
+    this.selectedCategory = category;
+    
+    if (category === 'All') {
+      this.menuItems = [...this.allItems];
+    } else {
+      this.menuItems = this.allItems.filter(item => 
+        item.category.toLowerCase() === category.toLowerCase()
+      );
+    }
+  }
+  addToCart(item: MenuItem) {
+    this.cartService.addItem(item);
+  }
+
+    openCart() {
+    this.dialog.open(CartComponent, {
+      width: '600px',
+      position: { right: '0', top: '0' },
+      height: '100vh',
+      panelClass: 'cart-modal'
+    });
+  }
 }
