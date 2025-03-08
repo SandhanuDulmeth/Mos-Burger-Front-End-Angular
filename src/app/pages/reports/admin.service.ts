@@ -1,3 +1,4 @@
+// admin.service.ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,39 +6,45 @@ import { Injectable } from '@angular/core';
 })
 export class AdminService {
   getOrders() {
-    const rawData = sessionStorage.getItem('orders');
+    const rawData = localStorage.getItem('order'); 
     try {
-      return rawData ? JSON.parse(rawData) : [];
+      const orders = JSON.parse(rawData || '[]');
+      
+      // Add validation for order structure
+      return orders.map((order: any) => ({
+        customer: order.customer || { name: 'Unknown Customer' },
+        items: order.items || [],
+        total: order.total || 0,
+        timestamp: order.timestamp || new Date().toISOString()
+      }));
     } catch (error) {
+      console.error('Error parsing orders:', error);
       return [];
     }
   }
 
   processData(orders: any[]) {
-    const todayString = new Date().toISOString().split('T')[0];
     const customerOrderCount: { [key: string]: number } = {};
     const itemCount: { [key: string]: number } = {};
-    const todayTransactions: any[] = [];
+    const transactions: any[] = [];
 
     orders.forEach(order => {
-      const customerName = order.customer?.name || 'Unknown Customer';
+      const customerName = order.customer.name || 'Unknown Customer';
       customerOrderCount[customerName] = (customerOrderCount[customerName] || 0) + 1;
 
-      if (order.items && order.items.length > 0) {
-        order.items.forEach((item: any) => {
-          const itemName = item.item?.name || 'Unknown Item';
-          const quantity = parseInt(item.quantity) || 0;
-          itemCount[itemName] = (itemCount[itemName] || 0) + quantity;
-        });
-      }
+      order.items.forEach((item: any) => {
+        const itemName = item.item?.name || 'Unknown Item';
+        const quantity = parseInt(item.quantity) || 0;
+        itemCount[itemName] = (itemCount[itemName] || 0) + quantity;
+      });
 
-      todayTransactions.push(order);
+      transactions.push(order);
     });
 
     return {
       sortedCustomers: Object.entries(customerOrderCount).sort((a, b) => b[1] - a[1]),
       sortedItems: Object.entries(itemCount).sort((a, b) => b[1] - a[1]),
-      transactions: todayTransactions
+      transactions: transactions
     };
   }
 }

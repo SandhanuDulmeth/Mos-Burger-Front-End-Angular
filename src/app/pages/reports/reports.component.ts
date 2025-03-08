@@ -23,10 +23,22 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     const orders = this.adminService.getOrders();
+    console.log('Retrieved orders:', orders); 
+    
+    if (orders.length === 0) {
+      console.warn('No orders found in localStorage');
+    }
+  
     const processedData = this.adminService.processData(orders);
     this.sortedCustomers = processedData.sortedCustomers;
     this.sortedItems = processedData.sortedItems;
     this.transactions = processedData.transactions;
+  
+    console.log('Processed data:', {
+      customers: this.sortedCustomers,
+      items: this.sortedItems,
+      transactions: this.transactions
+    });
   }
 
   ngAfterViewInit() {
