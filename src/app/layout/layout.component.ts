@@ -1,4 +1,4 @@
-// layout.component.ts
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../common/nav-bar/nav-bar.component';
