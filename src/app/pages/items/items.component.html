@@ -4,7 +4,9 @@
       <h2 class="mb-4">Our Menu</h2>
       <div class="d-flex flex-wrap">
         <button *ngFor="let cat of categories" 
+        
                 class="btn btn-light category-btn"
+                [class.active]="selectedCategory === cat"
                 (click)="filterItems(cat)">
           {{ cat }}
         </button>
@@ -18,19 +20,8 @@
   <span class="cart-badge">{{ cartItemCount }}</span>
 </button>
 
-  <!-- Update category buttons -->
-  <div class="d-flex flex-wrap">
-    <button *ngFor="let cat of categories" 
-            class="btn btn-light category-btn"
-            [class.active]="selectedCategory === cat"
-            (click)="filterItems(cat)">
-      {{ cat }}
-    </button>
-  </div>
 
-
-
-    <div class="row g-4">
+    <div class="row g-4 mt-4">
       <div *ngFor="let item of menuItems" class="col-md-6">
         <div class="card h-100">
           <img [src]="item.image" class="card-img-top" alt="{{item.name}}" style="height: 150px; object-fit: cover;">
