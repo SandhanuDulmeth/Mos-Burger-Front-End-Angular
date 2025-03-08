@@ -62,7 +62,7 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   printOrderReport(index: number) {
-    const storedOrders = localStorage.getItem('order') || '[]'; // Handle null
+    const storedOrders = localStorage.getItem('order') || '[]'; 
     const orders = JSON.parse(storedOrders);
     const order = orders[index];
   
@@ -71,7 +71,7 @@ export class OrderHistoryComponent implements OnInit {
       const customerName = order.customer?.name || 'No Name';
       const contactNo = order.customer?.phone || 'No Contact';
       const items = Array.isArray(order.items) ? order.items : [];
-      const total = (Number(order.total) || 0) / 100; // Convert to currency
+      const total = (Number(order.total) || 0) / 100; 
   
       const doc = new jsPDF();
   
@@ -102,7 +102,7 @@ export class OrderHistoryComponent implements OnInit {
       items.forEach((item: any) => {
         const itemDetails = item.item || {};
         const quantity = Number(item.quantity) || 0;
-        const price = (Number(itemDetails.price) || 0) / 100; // Convert to currency
+        const price = (Number(itemDetails.price) || 0) / 100; 
         const total = quantity * price;
   
         doc.text(itemDetails.name || 'Unknown Item', 10, yPosition);
