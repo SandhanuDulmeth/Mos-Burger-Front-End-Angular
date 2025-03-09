@@ -1,7 +1,7 @@
-// cart.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MenuItem } from '../items/items.component'; 
+
 export interface CartItem {
   item: MenuItem;
   quantity: number;

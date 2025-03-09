@@ -1,18 +1,17 @@
 <div class="cart-container position-relative">
-    <!-- Header section with positioned close button -->
+  
     <div class="modal-header position-relative p-3">
       <h2 class="modal-title">Customer Details</h2>
       <button type="button" 
-              class="btn-close position-absolute top-0 end-0 m-3" 
-              data-bs-dismiss="modal"
-
-              aria-label="Close"></button>
+      class="btn-close position-absolute top-0 end-0 m-3" 
+      (click)="closeCart()" 
+      aria-label="Close"></button>
     </div>
 
   
 
     <div class="modal-body p-3">
-      <!-- Customer selection dropdown -->
+    
       <div class="mb-3">
         <label>Select Customer:</label>
         <select class="form-select" (change)="selectCustomer($event)">
@@ -23,7 +22,7 @@
         </select>
       </div>
   
-      <!-- Rest of your content remains the same -->
+ 
       <div class="row g-3 mb-4">
         <div class="col-md-6">
           <input type="text" class="form-control" placeholder="Name" 

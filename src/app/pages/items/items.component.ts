@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -86,6 +85,7 @@ filterItems(category: string) {
   }
 
     openCart() {
+      
     this.dialog.open(CartComponent, {
       width: '600px',
       position: { right: '0', top: '0' },

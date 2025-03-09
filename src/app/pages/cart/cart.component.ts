@@ -1,9 +1,8 @@
-// Cart.Component.ts
-
 import { Component } from '@angular/core';
 import { CartService, CartItem } from '../cart/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 interface Customer {
   name: string;
   email: string;
@@ -29,7 +28,7 @@ export class CartComponent {
 cartItems!: CartItem[];
     total = 0;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService ,  private dialogRef: MatDialogRef<CartComponent>) {
     this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
       this.total = this.cartService.getTotalPrice();
@@ -84,7 +83,9 @@ clearCustomer() {
   };
 }
 
-
+closeCart() {
+  this.dialogRef.close();
+}
   checkout() {
     if (!this.selectedCustomer.name || !this.selectedCustomer.phone) {
       alert('Please provide at least name and phone number!');
