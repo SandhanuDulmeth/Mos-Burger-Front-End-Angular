@@ -8,13 +8,14 @@ import { LayoutComponent } from './layout/layout.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { OperationsComponent } from './pages/operations/operations.component';
 import { ReportsComponent } from './pages/reports/reports.component';
-
+import { authGuard } from './auth.guard'; 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     {
         path: '',
         component: LayoutComponent, 
+        canActivateChild: [authGuard],
         children: [
             { path: 'home', component: HomeComponent },
             { path: 'items', component: ItemsComponent },

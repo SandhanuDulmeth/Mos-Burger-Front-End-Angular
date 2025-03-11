@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NavBarComponent } from '../../common/nav-bar/nav-bar.component';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../auth.service'; // Adjust the path as needed
 
 @Component({
   selector: 'app-login',
@@ -13,8 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
- email: string = '';
+  email: string = '';
   password: string = '';
   isResetTrue: boolean = false;
   resetCode: string = '';
@@ -23,61 +22,48 @@ export class LoginComponent implements OnInit {
 
   loginDisabled: boolean = true;
   resetPasswordDisabled: boolean = true;
-  
-  
-  
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
+
   ngOnInit() {
-   
     setInterval(() => {
       this.currentTime = new Date().toLocaleString();
     }, 1000);
-
-
   }
 
+  onLogin() {
+    if (!this.email.endsWith("@gmail.com")) {
+      Swal.fire("Please enter a valid Gmail address");
+      return;
+    }
 
-onLogin() {
-  console.log('Login attempted with:', this.email, this.password);
-
-
-
-  if (!this.email.endsWith("@gmail.com")) {
-    Swal.fire("Please enter a valid Gmail address");
-    return;
-  }
-
-  fetch("http://localhost:8080/AdminController/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({email: this.email,password: this.password }),
-  })
-    .then((response) => response.text())
-    .then((result) => {
-      if (result === "true") {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Login Success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() =>  this.router.navigate(['/home']), 2000);
-      } else {
-        Swal.fire("Invalid email or password");
-      }
+    fetch("http://localhost:8080/AdminController/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: this.email, password: this.password }),
     })
-    .catch((error) => console.error(error));
+      .then((response) => response.text())
+      .then((result) => {
+        if (result === "true") {
+       
+          this.authService.login();
 
-
-
-
- 
-}
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Login Success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => this.router.navigate(['/home']), 2000);
+        } else {
+          Swal.fire("Invalid email or password");
+        }
+      })
+      .catch((error) => console.error(error));
+  }
 
   getResetCode() {
-  
     if (!this.email.endsWith("@gmail.com")) {
       Swal.fire("Please enter a valid Gmail address");
       return;
@@ -94,9 +80,6 @@ onLogin() {
         Swal.fire(result === "true" ? "OTP Sent Successfully" : "Failed to send OTP");
       })
       .catch((error) => console.error(error));
-
-
-    
   }
 
   resetPassword() {
@@ -119,9 +102,5 @@ onLogin() {
         Swal.fire(result ? "Password Reset Successful" : "Invalid OTP or Email");
       })
       .catch((error) => console.error(error));
-    
-
-
-
   }
 }

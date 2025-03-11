@@ -50,20 +50,25 @@ export class ItemsComponent implements OnInit {
   }
 
   async loadItemsFromJSON() {
+
+    const storedItems = localStorage.getItem('items');
+    if (storedItems) {
+      this.allItems = this.normalizeItems(JSON.parse(storedItems));
+      this.filterItems(this.selectedCategory);
+      return; 
+    }
+  
+   
     try {
       const response = await fetch("http://localhost:8080/itemController/get-Items");
       if (!response.ok) throw new Error('Network response was not ok');
       
       const data = await response.json();
+     
+      localStorage.setItem('items', JSON.stringify(data));
     
-        localStorage.setItem('items', JSON.stringify(data));
-       
-        const storedItems = localStorage.getItem('items');
-        if (storedItems) {
-          this.allItems = this.normalizeItems(JSON.parse(storedItems)); 
-        }
-
-      this.filterItems(this.selectedCategory);  
+      this.allItems = this.normalizeItems(data);
+      this.filterItems(this.selectedCategory);
     } catch (error) {
       console.error('Error loading items:', error);
     }
