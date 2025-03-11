@@ -1,1 +1,73 @@
-<p>operations works!</p>
+<div class="container">
+    <h1>Item Management</h1>
+    
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="id">Item Number:</label>
+        <input type="text" id="id" formControlName="id" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Item Type:</label>
+        <select id="category" formControlName="category" required>
+          <option value="" disabled>Select Category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="name">Item Name:</label>
+        <input type="text" id="name" formControlName="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" formControlName="price" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="text" id="image" formControlName="image" required>
+      </div>
+      
+      <button type="submit">{{ isEditing ? 'Update Item' : 'Add Item' }}</button>
+      <button *ngIf="isEditing" type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+
+    <div class="search">
+      <label for="searchInput">Search Item By Name:</label>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by name..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filterItems()"
+      >
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item Number</th>
+          <th>Item Type</th>
+          <th>Name</th>
+          <th>Price(Rs.)</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredItems">
+            <td>{{ item.itemNo }}</td>
+            <td>{{ item.itemType }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price | currency:'Rs. ' }}</td>
+          <td><img [src]="item.imageUrl" class="item-image" alt="Item image"></td>
+          <td class="actions">
+            <button (click)="editItem(item)">Edit</button>
+            <button (click)="deleteItem(item.itemNo)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
