@@ -38,6 +38,7 @@ export class OperationsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.loadItems();
+    localStorage.removeItem('items');
   }
 
   async loadItems(): Promise<void> {
@@ -54,7 +55,7 @@ export class OperationsComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     if (this.itemForm.invalid) return;
-
+    
     const formData = this.itemForm.value;
     const url = this.isEditing 
       ? "http://localhost:8080/itemController/update-Item"
@@ -75,6 +76,7 @@ export class OperationsComponent implements OnInit {
 
       const result = await response.text();
       if (result === "true") {
+
         Swal.fire({
           icon: 'success',
           title: this.isEditing ? 'Item updated!' : 'Item added!',
