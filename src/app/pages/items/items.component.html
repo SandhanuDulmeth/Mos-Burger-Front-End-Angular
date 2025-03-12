@@ -1,37 +1,33 @@
-
 <div class="container">
-    <div class="menu-header">
-      <h2 class="mb-4">Our Menu</h2>
-      <div class="d-flex flex-wrap">
-        <button *ngFor="let cat of categories" 
-        
-                class="btn btn-light category-btn"
-                [class.active]="selectedCategory === cat"
-                (click)="filterItems(cat)">
-          {{ cat }}
-        </button>
-      </div>
+  <div class="menu-header">
+    <h2 class="mb-4">Our Menu</h2>
+    <div class="d-flex flex-wrap">
+      <button *ngFor="let cat of categories" 
+              class="btn btn-light category-btn"
+              [class.active]="selectedCategory === cat"
+              (click)="filterItems(cat)">
+        {{ cat }}
+      </button>
     </div>
+  </div>
 
+  <button class="order-btn" (click)="openCart()">
+    🛒
+    <span class="cart-badge">{{ cartItemCount }}</span>
+  </button>
 
-<button  class="order-btn" (click)="openCart()">
-  🛒
-  <span class="cart-badge">{{ cartItemCount }}</span>
-</button>
-
-
-    <div class="row g-4 mt-4">
-      <div *ngFor="let item of menuItems" class="col-md-6">
-        <div class="card h-100">
-          <img [src]="item.image" class="card-img-top" alt="{{item.name}}" style="height: 150px; object-fit: cover;">
-          <div class="p-3">
-            <h5 class="item-name">{{ item.name }}</h5>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="h5 text-primary">Rs. {{ item.price }}</span>
-              <button style="background-color: #FB710C;" class="btn btn-add-item"  (click)="addToCart(item)">Add to Cart</button>
-            </div>
+  <div class="row g-4 mt-4">
+    <div *ngFor="let item of menuItems" class="col-md-4 col-sm-6">
+      <div class="card h-100 custom-card">
+        <img [src]="item.image" class="card-img-top" alt="{{item.name}}" style="height: 100px; object-fit: cover;">
+        <div class="p-2">
+          <h5 class="item-name">{{ item.name }}</h5>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="h5 text-primary">Rs. {{ item.price }}</span>
+            <button style="background-color: #FB710C;" class="btn btn-add-item" (click)="addToCart(item)">Add to Cart</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
