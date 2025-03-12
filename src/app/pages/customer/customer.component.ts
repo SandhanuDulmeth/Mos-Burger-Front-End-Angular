@@ -63,9 +63,11 @@ export class CustomerComponent implements OnInit {
       return;
     }
 
+    // Choose URL and HTTP method based on whether we are adding or updating
     const url = this.editingCustomerId 
       ? 'http://localhost:8080/customerController/update-Customers'
       : 'http://localhost:8080/customerController/add-Customers';
+    const method = this.editingCustomerId ? 'PATCH' : 'POST';
 
     try {
       const body = this.editingCustomerId
@@ -73,7 +75,7 @@ export class CustomerComponent implements OnInit {
         : this.customerForm;
 
       const response = await fetch(url, {
-        method: 'POST',
+        method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
@@ -83,11 +85,11 @@ export class CustomerComponent implements OnInit {
         // Update local data
         if (this.editingCustomerId) {
           this.customers = this.customers.map(c => 
-            c.id === this.editingCustomerId ? {...body, id: this.editingCustomerId} : c
+            c.id === this.editingCustomerId ? { ...body, id: this.editingCustomerId } : c
           );
         } else {
           const tempId = Date.now().toString();
-          this.customers = [...this.customers, {...body, id: tempId}];
+          this.customers = [...this.customers, { ...body, id: tempId }];
         }
 
         this.saveCustomersToLocalStorage();
