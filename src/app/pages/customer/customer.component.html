@@ -2,7 +2,7 @@
 <div class="main-container">
   <!-- Form Section -->
   <div class="form-container">
-    <h2>{{ editingIndex === -1 ? 'Add Customer' : 'Edit Customer' }}</h2>
+    <h2>{{ editingCustomerId ? 'Edit Customer' : 'Add Customer' }}</h2>
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Name:</label>
@@ -40,7 +40,10 @@
           required></textarea>
       </div>
       <button type="submit">
-        {{ editingIndex === -1 ? 'Add Customer' : 'Update Customer' }}
+        {{ editingCustomerId ? 'Update Customer' : 'Add Customer' }}
+      </button>
+      <button type="button" *ngIf="editingCustomerId" (click)="cancelEdit()">
+        Cancel Edit
       </button>
     </form>
   </div>
@@ -63,14 +66,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of filteredCustomers; let i = index">
+        <tr *ngFor="let customer of filteredCustomers">
           <td>{{ customer.name }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
           <td>{{ customer.address }}</td>
           <td class="actions">
-            <button (click)="editCustomer(i)">✏️</button>
-            <button (click)="deleteCustomer(i)">🗑️</button>
+            <button (click)="editCustomer(customer)">✏️</button>
+            <button (click)="deleteCustomer(customer.id!)">🗑️</button>
           </td>
         </tr>
       </tbody>
