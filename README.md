@@ -1,59 +1,56 @@
-# MosBurgerFrontEndAngular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+# Mos Burger Front End Angular
 
-## Development server
+## Description
+This project is the front-end application for Mos Burger, built using Angular. It includes a variety of features and functionalities to enhance the user experience for ordering and managing Mos Burger products.
 
-To start a local development server, run:
+## Installation Instructions
+To install and run this project locally, follow these steps:
 
-```bash
-ng serve
-```
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/SandhanuDulmeth/Mos-Burger-Front-End-Angular.git
+   cd Mos-Burger-Front-End-Angular
+   ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-## Code scaffolding
+3. **Run the Application**
+   ```bash
+   ng serve
+   ```
+   Open your browser and navigate to `http://localhost:4200/`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Usage
+Once the application is running, you can explore various features:
 
-```bash
-ng generate component component-name
-```
+- Browse burger products
+- Place orders
+- Manage your account
+- View order history
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Contributing
+We welcome contributions to enhance the project. Follow these steps to contribute:
 
-```bash
-ng generate --help
-```
+1. **Fork the Repository**
+2. **Create a Branch**
+   ```bash
+   git checkout -b feature/YourFeatureName
+   ```
+3. **Commit Your Changes**
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+4. **Push to the Branch**
+   ```bash
+   git push origin feature/YourFeatureName
+   ```
+5. **Open a Pull Request**
 
-## Building
 
-To build the project run:
+## Contact Information
+For any queries or support, please contact Sandhanu Dulmeth at [www.linkedin.com/in/sandhanu-mendis](https://www.linkedin.com/in/sandhanu-mendis).
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
