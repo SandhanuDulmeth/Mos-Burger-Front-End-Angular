@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import * as bootstrap from 'bootstrap';
 import { AuthService } from '../../auth.service'; // Adjust the path as needed
 
 @Component({
@@ -100,7 +101,21 @@ export class LoginComponent implements OnInit {
       .then((response) => response.json())
       .then((result: boolean) => {
         Swal.fire(result ? "Password Reset Successful" : "Invalid OTP or Email");
+        if (result) {
+          this.closeForgetPasswordModal(); // Call the method to close the modal
+        }
       })
       .catch((error) => console.error(error));
+  }
+
+  
+  closeForgetPasswordModal() {
+    const modalElement = document.getElementById('forgotPasswordModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
   }
 }
