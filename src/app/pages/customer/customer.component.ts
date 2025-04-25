@@ -34,9 +34,26 @@ export class CustomerComponent implements OnInit {
   async loadCustomers(): Promise<void> {
     try {
       const response = await fetch('http://localhost:8080/customerController/get-Customers');
+      
+      // Handle 204 No Content response
+      if (response.status === 204) {
+        this.customers = [];
+        Swal.fire('Info', 'There are no customers', 'info');
+        this.saveCustomersToLocalStorage();
+        return;
+      }
+      
+      // Handle HTTP errors other than 204
       if (!response.ok) throw new Error('Failed to load customers');
+      
+      // Parse JSON only if response is OK (200)
       this.customers = await response.json();
       this.saveCustomersToLocalStorage();
+      
+      // Optional: Check if the returned array is empty (if backend might return 200 with empty array)
+      if (this.customers.length === 0) {
+        Swal.fire('Info', 'There are no customers', 'info');
+      }
     } catch (error) {
       console.error(error);
       Swal.fire('Error', 'Failed to load customers', 'error');
