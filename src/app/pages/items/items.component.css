@@ -35,3 +35,14 @@
   max-width: 250px;  /* Adjust this value to further control card width */
   margin: auto;
 }
+.category-btn .badge {
+  font-size: 0.75rem;
+  padding: 0.25em 0.4em;
+  position: relative;
+  top: -1px;
+}
+
+.category-btn.active .badge {
+  background-color: #fff !important;
+  color: #000 !important;
+}
