@@ -24,6 +24,7 @@ export class ItemsComponent implements OnInit {
   menuItems: MenuItem[] = [];
   selectedCategory = 'All';
   cartItemCount = 0;
+  public categoryCounts: { [key: string]: number } = {};
 
   constructor(
     private cartService: CartService,
@@ -38,8 +39,20 @@ export class ItemsComponent implements OnInit {
     this.cartService.cartItems$.subscribe(items => {
       this.cartItemCount = items.reduce((sum, ci) => sum + ci.quantity, 0);
     });
+    this.loadCategoryCounts();
   }
 
+  async loadCategoryCounts() {
+    try {
+      const response = await fetch("http://localhost:8080/itemController/get-Category");
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      this.categoryCounts = data;
+    } catch (error) {
+      console.error('Error loading category counts:', error);
+    }
+  }
   normalizeItems(rawItems: any[]): MenuItem[] {
     return rawItems.map(item => ({
       id: item.itemNo,
