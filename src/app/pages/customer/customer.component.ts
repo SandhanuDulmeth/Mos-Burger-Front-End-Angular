@@ -25,6 +25,8 @@ export class CustomerComponent implements OnInit {
   searchInput: string = '';
 
   async ngOnInit(): Promise<void> {
+    localStorage.removeItem('customers'); // Clear local storage for testing
+   
     await this.loadCustomers();
     this.loadCustomersFromLocalStorage();
   }

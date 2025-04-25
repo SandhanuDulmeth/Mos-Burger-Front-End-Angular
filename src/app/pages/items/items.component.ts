@@ -33,6 +33,7 @@ export class ItemsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.removeItem('items'); // Clear local storage for testing
     this.loadItemsFromJSON();
     this.cartService.cartItems$.subscribe(items => {
       this.cartItemCount = items.reduce((sum, ci) => sum + ci.quantity, 0);
